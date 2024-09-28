@@ -1,8 +1,8 @@
 <div *ngIf="isLogin()">
     <h3><b>Hi, {{form.data.firstName }} ({{form.data.roleName}})</b></h3>
-    <a [routerLink]="['/welcome']"><b>Add User</b></a>
+    <a [routerLink]="['/user']"><b>Add User</b></a>
     <b> | </b>
-    <a [routerLink]="['/login']"><b>User List</b></a>
+    <a [routerLink]="['/userlist']"><b>User List</b></a>
     <b> | </b>
     <a (click)="logout()">
         <font color="blue"><b>Logout</b></font>

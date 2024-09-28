@@ -1,5 +1,17 @@
-<h3>Hi, Guest</h3>
-<a [routerLink]="['/welcome']"><b>Welome</b></a>
-<b> | </b>
-<a [routerLink]="['/login']"><b>Login</b></a>
+<div *ngIf="isLogin()">
+    <h3><b>Hi, {{form.data.firstName }} ({{form.data.roleName}})</b></h3>
+    <a [routerLink]="['/welcome']"><b>Add User</b></a>
+    <b> | </b>
+    <a [routerLink]="['/login']"><b>User List</b></a>
+    <b> | </b>
+    <a (click)="logout()">
+        <font color="blue"><b>Logout</b></font>
+    </a>
+</div>
+<div *ngIf="!isLogin()">
+    <h3>Hi, Guest</h3>
+    <a [routerLink]="['/welcome']"><b>Welome</b></a>
+    <b> | </b>
+    <a [routerLink]="['/login']"><b>Login</b></a>
+</div>
 <hr>

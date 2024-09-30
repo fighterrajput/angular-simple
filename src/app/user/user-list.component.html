@@ -1,0 +1,28 @@
+<app-navbar></app-navbar>
+<form>
+    <div align="center">
+        <h1>User List</h1>
+    </div>
+    <table border="1%" style="width: 100%;">
+        <tr>
+            <th>Id</th>
+            <th>Image</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+            <th>LoginId</th>
+            <th>Password</th>
+            <th>DOB</th>
+            <th>Role</th>
+        </tr>
+        <tr *ngFor="let m of form.list;">
+            <td style="text-align: center;">{{ m.id }}</td>
+            <td> <img src="http://localhost:8081/User/profilePic/{{m.id}}" height="55px" width="80px"></td>
+            <td style="text-align: center;">{{ m.firstName }}</td>
+            <td style="text-align: center;">{{ m.lastName }}</td>
+            <td style="text-align: center;">{{ m.loginId }}</td>
+            <td style="text-align: center;">{{ m.password }}</td>
+            <td style="text-align: center;">{{ m.dob | date: 'dd-MM-yyyy' }}</td>
+            <td style="text-align: center;">{{ m.roleName }}</td>
+        </tr>
+    </table>
+</form>

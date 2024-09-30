@@ -1,0 +1,48 @@
+<app-navbar></app-navbar>
+<div align="center">
+    <h1>Add User</h1>
+    <h3>
+        <font color="green">{{ form.message }}</font>
+    </h3>
+    <table>
+        <tr>
+            <th align="left">Role : </th>
+            <td><select name="id" [(ngModel)]="form.data.roleId">
+                    <option [ngValue]="" value="undefined">{{'--------Select Role---------' }}</option>
+                    <option *ngFor="let obj of form.preload" [value]="obj.key">{{obj.value}}</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th>First Name: </th>
+            <td><input type="text" name="firstName" [(ngModel)]="form.data.firstName" /></td>
+        </tr>
+        <tr>
+            <th>Last Name: </th>
+            <td><input type="text" name="lastName" [(ngModel)]="form.data.lastName" /></td>
+        </tr>
+        <tr>
+            <th>Login Id: </th>
+            <td><input type="text" name="loginId" [(ngModel)]="form.data.loginId" /></td>
+        </tr>
+        <tr>
+            <th>Password: </th>
+            <td><input type="text" name="password" [(ngModel)]="form.data.password" /></td>
+        </tr>
+        <tr>
+            <th>DOB: </th>
+            <td><input type="date" name="dob" [(ngModel)]="form.data.dob"/></td>
+        </tr>
+        <tr>
+            <th>Image :</th>
+            <td><input type="file" name="imageId" (change)="onFileSelect($event)" accept="image/*">
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><button (click)="save()">save</button> &nbsp;
+                <a [routerLink]="['/userlist']"><button>list</button></a>
+            </td>
+        </tr>
+    </table>
+</div>

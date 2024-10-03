@@ -10,6 +10,7 @@ import { SignupComponent } from './signup/signup.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserComponent } from './user/user.component';
 import { UserListComponent } from './user/user-list.component';
+import { HttpServiceService } from './http-service.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,9 @@ import { UserListComponent } from './user/user-list.component';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    HttpServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,13 +14,14 @@ export class SignupComponent {
     message: ''
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpService: HttpServiceService) {
 
   }
 
   signUp() {
-    this.httpClient.post('http://localhost:8081/Auth/signUp', this.form.data).subscribe((res: any) => {
-      this.form.message = res.result.message;
+    var self = this;
+    this.httpService.post('http://localhost:8081/Auth/signUp', this.form.data, function (res: any) {
+      self.form.message = res.result.message;
     })
   }
 

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,7 @@ export class UserComponent implements OnInit {
 
   fileToUpload: any = null;
 
-  constructor(private httpClient: HttpClient, private route: ActivatedRoute) {
+  constructor(private httpService: HttpServiceService, private route: ActivatedRoute) {
     this.route.params.subscribe((params: any) => {
       this.form.data.id = params["id"];
       console.log(this.form.data.id)
@@ -37,41 +38,41 @@ export class UserComponent implements OnInit {
   }
 
   preload() {
-    this.httpClient.get('http://localhost:8081/User/preload').subscribe((res: any) => {
-      this.form.preload = res.result.roleList;
+    var self = this;
+    this.httpService.get('http://localhost:8081/User/preload', function (res: any) {
+      self.form.preload = res.result.roleList;
     })
   }
 
   display() {
-    this.httpClient.get('http://localhost:8081/User/get/' + this.form.data.id).subscribe((res: any) => {
+    var self = this;
+    this.httpService.get('http://localhost:8081/User/get/' + this.form.data.id, function (res: any) {
       console.log(res)
-      this.form.data = res.result.data;
+      self.form.data = res.result.data;
     });
   }
 
   save() {
-    this.httpClient.post('http://localhost:8081/User/save', this.form.data).subscribe((res: any) => {
+    var self = this;
+    this.httpService.post('http://localhost:8081/User/save', this.form.data, function (res: any) {
       console.log('res => ', res)
 
-      this.form.message = '';
+      self.form.message = '';
 
       if (res.result.message) {
-        this.form.message = res.result.message;
+        self.form.message = res.result.message;
       }
 
-      this.form.data.id = res.result.data;
+      self.form.data.id = res.result.data;
 
-      this.myFile();
+      self.myFile();
     });
   }
 
   myFile() {
     const formData = new FormData();
     formData.append('file', this.fileToUpload);
-    return this.httpClient.post('http://localhost:8081/User/profilePic/' + this.form.data.id, formData).subscribe((res: any) => {
-      console.log(this.fileToUpload);
-    }, error => {
-      console.log(error);
+    this.httpService.post('http://localhost:8081/User/profilePic/' + this.form.data.id, formData, function (res: any) {
     });
   }
 }

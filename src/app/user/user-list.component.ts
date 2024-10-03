@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpServiceService } from '../http-service.service';
 
 @Component({
   selector: 'app-user-list',
@@ -17,7 +18,7 @@ export class UserListComponent implements OnInit {
     deleteParams: {}
   }
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(private httpService: HttpServiceService, private router: Router) {
 
   }
 
@@ -27,16 +28,18 @@ export class UserListComponent implements OnInit {
   }
 
   preload() {
-    this.httpClient.get('http://localhost:8081/User/preload').subscribe((res: any) => {
-      this.form.preload = res.result.roleList;
+    var self = this;
+    this.httpService.get('http://localhost:8081/User/preload', function (res: any) {
+      self.form.preload = res.result.roleList;
     })
   }
 
   search() {
-    this.httpClient.post('http://localhost:8081/User/search/' + this.form.pageNo, this.form.searchParams).subscribe((res: any) => {
-      this.form.list = res.result.data;
-      console.log('list => ', this.form.list)
-      console.log('list length => ', this.form.list.length)
+    var self = this;
+    this.httpService.post('http://localhost:8081/User/search/' + this.form.pageNo, this.form.searchParams, function (res: any) {
+      self.form.list = res.result.data;
+      console.log('list => ', self.form.list)
+      console.log('list length => ', self.form.list.length)
     })
   }
 
@@ -56,11 +59,12 @@ export class UserListComponent implements OnInit {
   }
 
   delete() {
-    this.httpClient.get('http://localhost:8081/User/delete/' + this.form.deleteParams.id).subscribe((res: any) => {
-      this.form.message = res.result.message;
-      console.log('message => ', this.form.message)
-      this.form.pageNo = 0;
-      this.search();
+    var self = this;
+    this.httpService.get('http://localhost:8081/User/delete/' + this.form.deleteParams.id, function (res: any) {
+      self.form.message = res.result.message;
+      console.log('message => ', self.form.message)
+      self.form.pageNo = 0;
+      self.search();
     });
   }
 

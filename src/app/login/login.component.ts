@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpServiceService } from '../http-service.service';
 
 @Component({
@@ -15,12 +15,17 @@ export class LoginComponent {
     message: ''
   }
 
-  constructor(private router: Router, private httpService: HttpServiceService) {
+  constructor(private router: Router, private httpService: HttpServiceService, private route: ActivatedRoute) {
+
+    this.route.queryParams.subscribe((params) => {
+      this.form.message = params['errorMessage'] || null;
+      console.log('msssssssssgggggggggggg = >', this.form.message)
+    });
 
   }
 
   signIn() {
-    
+
     var self = this;
 
     this.httpService.post('http://localhost:8081/Auth/login', this.form.data, function (res: any) {
